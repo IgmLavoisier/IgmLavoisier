@@ -11,50 +11,78 @@ fn comparar(ca1:&Vec<String>,ca2:&Vec<String>){
             else {
             ca2.len() }
     };
-    let mut i1=ca1.into_iter();
-    let mut i2=ca2.into_iter();
-    for _ in 0..m {
-        let p1 = match i1.next() {
-            Some(x) => x,
-            None => "",
-        };
 
-        let p2 = match i2.next() {
-            Some(x) => x,
-            None => "",
-        };
+    //   
+    // para cada linea de A  
+    // saca una lista de todos los sitios en donde aparece
+    // la lista tiene algun dato ? => +1
+    // alguno de los datos es mayor que memo ? +1 
+    // alguno de los datos es igual que memo+1 ? +1 
+    //         
+    // memo es el menor de la lista que sea mayor que memo o 
+    //      el memor de la lista
+    //
 
-        if p1==p2{
-            cont+=1;
+
+    //let mut i1=ca1.into_iter();
+    //let mut i2=ca2.into_iter();
+    //for _ in 0..m {
+    //    let p1 = match i1.next() {
+    //        Some(x) => x,
+    //        None => "",
+    //    };
+
+    //    let p2 = match i2.next() {
+    //        Some(x) => x,
+    //        None => "",
+    //    };
+
+    //    if p1==p2{
+    //        cont+=1;
+    //    }
+    //    //println!("{:<60} ### {:?}  ", p1 , p2 );
+    //}
+
+    let mut record:i32=0;
+    let mut memo:i32=0;
+    for p1 in ca1{
+        let mut listin:Vec<i32>=Vec::new();
+        let mut linea:i32=-1;
+        for p2 in ca2{
+            linea+=1;
+            if p1==p2{
+                 listin.push(linea);
+            }
         }
-        //println!("{:<60} ### {:?}  ", p1 , p2 );
+        println!("{:?}", listin);
     }
+    println!("----------------------------------------");
 
-    if (100.0  * cont as f64 /m as f64  )> 50.0
-    &&   (100.0  * cont as f64 /m as f64  )< 100.0{
-        println!("{} {} {:.3} ", cont , m, 100.0  * cont as f64 /m as f64   );
-        let mut i1=ca1.into_iter();
-        let mut i2=ca2.into_iter();
-        for _ in 0..m {
-            let p1 = match i1.next() {
-                Some(x) => x,
-                None => "",
-            };
+  //  if (100.0  * cont as f64 /m as f64  )> 50.0
+  //  &&   (100.0  * cont as f64 /m as f64  )< 100.0{
+  //      println!("{} {} {:.3} ", cont , m, 100.0  * cont as f64 /m as f64   );
+  //      let mut i1=ca1.into_iter();
+  //      let mut i2=ca2.into_iter();
+  //      for _ in 0..m {
+  //          let p1 = match i1.next() {
+  //              Some(x) => x,
+  //              None => "",
+  //          };
 
-            let p2 = match i2.next() {
-                Some(x) => x,
-                None => "",
-            };
+  //          let p2 = match i2.next() {
+  //              Some(x) => x,
+  //              None => "",
+  //          };
 
-             if  p1==p2 {
-                 println!("{:<60} === {:}  ", p1 , p2 );
-             }
-             else{
-                 println!("{:<60} ### {:}  ", p1 , p2 );
-             }
-        }
-        println!("-----------------------------------------------------------------------------------------------");
-    }
+  //           if  p1==p2 {
+  //               println!("{:<60} === {:}  ", p1 , p2 );
+  //           }
+  //           else{
+  //               println!("{:<60} ### {:}  ", p1 , p2 );
+  //           }
+  //      }
+  //      println!("-----------------------------------------------------------------------------------------------");
+  //  }
 
 
     //for li1 in ca1{
@@ -66,7 +94,8 @@ fn comparar(ca1:&Vec<String>,ca2:&Vec<String>){
 
 
 fn main() -> std::io::Result<()> {
-    let st =File::open("../pruebasrust/prueba.hist");
+    //let st =File::open("../pruebasrust/prueba.hist");
+    let st =File::open("prueba.hist");
     let mut lista:Vec<String>=Vec::new();
 
     let file = match st {
