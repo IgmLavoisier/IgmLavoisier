@@ -1,10 +1,10 @@
 // prueba lista de listas dd
+// prueba lista de listas dd
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 
-fn comparar(ca1:&Vec<String>,ca2:&Vec<String>){
-    let mut cont:i32=0;
+fn comparar(ca1:&Vec<String>,ca2:&Vec<String>) -> f64{
     let m= {
         if ca1.len() > ca2.len() {
             ca1.len() }
@@ -54,9 +54,26 @@ fn comparar(ca1:&Vec<String>,ca2:&Vec<String>){
                  listin.push(linea);
             }
         }
-        println!("{:?}", listin);
+
+        if listin.len() > 0 {
+            record+=1;
+        }
+
+        let mut haymayor:bool=false;
+        for cu in &listin{
+           if cu>&memo && !haymayor {
+               if *cu==memo+1{
+                   record+=1;
+               }
+               memo=*cu;
+               haymayor=true;
+               record+=1;
+           }
+        }
     }
-    println!("----------------------------------------");
+
+    return record as f64/m as f64;
+    
 
   //  if (100.0  * cont as f64 /m as f64  )> 50.0
   //  &&   (100.0  * cont as f64 /m as f64  )< 100.0{
@@ -94,8 +111,8 @@ fn comparar(ca1:&Vec<String>,ca2:&Vec<String>){
 
 
 fn main() -> std::io::Result<()> {
-    //let st =File::open("../pruebasrust/prueba.hist");
-    let st =File::open("prueba.hist");
+    let st =File::open("../pruebasrust/prueba.hist");
+    //let st =File::open("prueba.hist");
     let mut lista:Vec<String>=Vec::new();
 
     let file = match st {
@@ -117,15 +134,31 @@ fn main() -> std::io::Result<()> {
        lista.push( lin );
     }
 
+    let mut max:f64=0.0;
     for pa1 in &paque{ 
        for pa2 in &paque{ 
-           comparar(pa1,pa2);
-          //for linea in pac{ 
-              //println!("{}", linea); 
-          //}
+           if *pa1 != *pa2{
+              let x=comparar(pa1,pa2);
+              //   println!("{}",x);
+              if x>max{
+                  max=x;
+              }
+           }
        }
     }
 
+    println!("====>{}",max);
+    for pa1 in &paque{ 
+       for pa2 in &paque{ 
+           if *pa1 != *pa2{
+              let x=comparar(pa1,pa2);
+              //println!("{}",x);
+              if x==max{
+                 println!("{:#?}  {:#?}  " , pa1,pa2);
+              }
+           };
+       }
+    }
     Ok(())
 }
 
